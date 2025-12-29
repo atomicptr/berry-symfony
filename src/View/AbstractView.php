@@ -17,4 +17,12 @@ abstract class AbstractView implements Renderable
     {
         $this->render()->renderInto($buffer);
     }
+
+    public function toArray(): array
+    {
+        $data = $this->render()->toArray();
+
+        // replace the class of the rendered element with ours
+        return [static::class, $data[1], $data[2]];
+    }
 }
