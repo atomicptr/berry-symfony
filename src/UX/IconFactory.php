@@ -20,8 +20,6 @@ final class IconFactory
      */
     public function render(string $name, array $attributes = []): Element
     {
-        assert(class_exists(IconRendererInterface::class), 'Make sure you have symfony/ux-icons installed');
-
         return new UnsafeRawText(
             $this->iconRenderer->renderIcon($name, $attributes)
         );
