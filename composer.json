@@ -17,12 +17,13 @@
     "require": {
         "php": ">=8.3",
         "symfony/framework-bundle": "^7|^8",
-        "berry/html": ">=0.4"
+        "berry/html": ">=0.6"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
-        "phpstan/phpstan-symfony": "^2.0"
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0"
     },
     "config": {
         "allow-plugins": {

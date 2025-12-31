@@ -2,7 +2,8 @@
 
 namespace Berry\Symfony\Controller;
 
-use Berry\Renderable;
+use Berry\Rendering\ArrayBufferRenderer;
+use Berry\Element;
 use Symfony\Component\HttpFoundation\Response;
 
 trait BerryControllerTrait
@@ -12,8 +13,11 @@ trait BerryControllerTrait
      *
      * @param array<string, string> $headers
      */
-    protected function renderBerryView(Renderable $renderable, int $statusCode = 200, array $headers = []): Response
+    protected function renderBerryView(Element $renderable, int $statusCode = 200, array $headers = []): Response
     {
-        return new Response($renderable->toString(), $statusCode, $headers);
+        $renderer = new ArrayBufferRenderer();
+        $renderable->render($renderer);
+
+        return new Response($renderer->renderToString(), $statusCode, $headers);
     }
 }
