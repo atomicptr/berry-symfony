@@ -4,7 +4,7 @@ namespace Berry\Symfony\View;
 
 use Berry\Symfony\UX\IconFactoryInterface;
 use Berry\Element;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
