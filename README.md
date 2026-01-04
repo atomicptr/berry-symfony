@@ -20,8 +20,8 @@ Next we'll create two views one for the layout and one for the index page:
 namespace App\View;
 
 use Berry\Html5\Enums\Rel;
-use Berry\Layout;
 use Berry\Element;
+use Berry\Symfony\View\AbstractViewFactory;
 
 use function Berry\Html5\body;
 use function Berry\Html5\div;
@@ -31,13 +31,13 @@ use function Berry\Html5\link;
 use function Berry\Html5\script;
 use function Berry\Html5\title;
 
-class AppLayout extends Layout
+class AppLayout extends AbstractViewFactory
 {
-    public function renderTree(): Element
+    public function render(string $title, Element $content): Element
     {
         return html()
             ->child(head()
-                ->child(title()->text('Index Page'))
+                ->child(title()->text($title))
                 // lets use pico.css for styling https://picocss.com
                 ->child(link()
                     ->rel(Rel::Stylesheet)
@@ -45,7 +45,7 @@ class AppLayout extends Layout
             ->child(body()
                 ->child(div()
                     ->class('container')
-                    ->child($this->renderSlot('content')))
+                    ->child($content))
                 // also we add HTMX
                 ->child(script()->src('https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.7/htmx.min.js')));
     }
@@ -61,7 +61,7 @@ class AppLayout extends Layout
 namespace App\View;
 
 use Berry\Element;
-use Berry\Layout;
+use Berry\Symfony\View\AbstractViewFactory;
 use Symfony\Component\Routing\Router;
 
 use function Berry\Html5\button;
@@ -69,14 +69,9 @@ use function Berry\Html5\div;
 use function Berry\Html5\h1;
 use function Berry\Html5\p;
 
-class IndexPage extends Component
+class IndexPage extends AbstractViewFactory
 {
-    // here we add the router to create urls
-    public function __construct(
-        private Router $router
-    ) {}
-
-    public function renderTree(): Element
+    public function render(): Element
     {
         return div()
             ->child(h1()->text('Counter Page'))
@@ -91,7 +86,7 @@ class IndexPage extends Component
         return button()
             ->id('counter-button')
             // when clicked on the button increase the value by 1
-            ->attr('hx-post', $this->router->generate('app_counter', ['value' => $value + 1]))
+            ->attr('hx-post', $this->generateUrl('app_counter', ['value' => $value + 1]))
             ->attr('hx-swap', 'outerHTML')
             ->text("+ $value");
     }
@@ -119,26 +114,29 @@ class IndexController extends AbstractController
     // if you dont want to use our AbstractController you can alternative just add the trait
     // use BerryControllerTrait;
 
+    public function __construct(
+        private AppLayout $layout,
+    ) {}
+
     #[Route('/', name: 'app_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(IndexPage $page): Response
     {
         // we create a page object wrapped inside our layout
-        $page = new AppLayout()
-            ->slot('content', new IndexPage($this->container->get('router')));
+        $content = $this->layout->render('Index Page', $page->render());
 
         // and last we just renderBerryView
-        return $this->renderBerryView($page);
+        return $this->renderBerryView($content);
     }
 
     #[Route('/counter/{value}', name: 'app_counter', methods: ['POST'])]
-    public function counter(int $value): Response
+    public function counter(int $value, IndexPage $page): Response
     {
         // on a POST to "/counter/{value}" we want to only render the button again
         // with an increased value so lets create the index page without layout
-        $page = new IndexPage($this->container->get('router'));
+        $content = $page->counterButton($value);
 
         // and only call the counterButton
-        return $this->renderBerryView($page->counterButton($value));
+        return $this->renderBerryView($content);
     }
 }
 ```
