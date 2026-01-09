@@ -7,9 +7,9 @@ use Berry\Symfony\UX\IconFactoryInterface;
 use Berry\Element;
 use Symfony\UX\Icons\Exception\IconNotFoundException;
 
-trait WithRenderIcon
+trait WithRenderIconLocator
 {
-    protected ?IconFactoryInterface $iconFactory = null;
+    protected ?IconFactoryInterface $iconFactoryLocator = null;
 
     /**
      * @param array<string, string|bool> $attributes an array of HTML attributes
@@ -18,6 +18,6 @@ trait WithRenderIcon
      */
     protected function renderIcon(string $name, array $attributes = []): Element
     {
-        return ($this->iconFactory ?? ComponentServiceLocator::getIconFactory())->render($name, $attributes);
+        return ($this->iconFactoryLocator ?? ComponentServiceLocator::getIconFactory())->render($name, $attributes);
     }
 }

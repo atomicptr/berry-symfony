@@ -6,9 +6,9 @@ use Berry\Symfony\Locator\ComponentServiceLocator;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use LogicException;
 
-trait WithIsGranted
+trait WithIsGrantedLocator
 {
-    protected ?AuthorizationCheckerInterface $authorizationChecker = null;
+    protected ?AuthorizationCheckerInterface $authorizationCheckerLocator = null;
 
     /**
      * Checks if the attribute is granted against the current authentication token and optionally supplied subject.
@@ -17,6 +17,6 @@ trait WithIsGranted
      */
     protected function isGranted(mixed $attribute, mixed $subject = null): bool
     {
-        return ($this->authorizationChecker ?? ComponentServiceLocator::getAuthorizationChecker())->isGranted($attribute, $subject);
+        return ($this->authorizationCheckerLocator ?? ComponentServiceLocator::getAuthorizationChecker())->isGranted($attribute, $subject);
     }
 }

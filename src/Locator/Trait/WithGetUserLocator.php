@@ -2,14 +2,12 @@
 
 namespace Berry\Symfony\Locator\Trait;
 
-use Berry\Symfony\Locator\ComponentServiceLocator;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use LogicException;
 
-trait WithGetUser
+trait WithGetUserLocator
 {
-    protected ?TokenStorageInterface $tokenStorage = null;
+    use WithGetTokenLocator;
 
     /**
      * Get a user from the Security Token Storage.
@@ -20,9 +18,7 @@ trait WithGetUser
      */
     protected function getUser(): ?UserInterface
     {
-        $tokenStorage = $this->tokenStorage ?? ComponentServiceLocator::getTokenStorage();
-
-        $token = $tokenStorage->getToken();
+        $token = $this->getToken();
 
         if ($token === null) {
             return null;

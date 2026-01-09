@@ -6,9 +6,9 @@ use Berry\Symfony\Locator\ComponentServiceLocator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-trait WithGenerateUrl
+trait WithGenerateUrlLocator
 {
-    protected ?RouterInterface $router = null;
+    protected ?RouterInterface $routerLocator = null;
 
     /**
      * Generates a URL from the given parameters.
@@ -19,6 +19,6 @@ trait WithGenerateUrl
      */
     protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        return ($this->router ?? ComponentServiceLocator::getRouter())->generate($route, $parameters, $referenceType);
+        return ($this->routerLocator ?? ComponentServiceLocator::getRouter())->generate($route, $parameters, $referenceType);
     }
 }
