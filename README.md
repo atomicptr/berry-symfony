@@ -21,7 +21,6 @@ namespace App\View;
 
 use Berry\Html5\Enums\Rel;
 use Berry\Element;
-use Berry\Symfony\View\AbstractViewFactory;
 
 use function Berry\Html5\body;
 use function Berry\Html5\div;
@@ -61,7 +60,6 @@ class AppLayout
 namespace App\View;
 
 use Berry\Element;
-use Berry\Symfony\View\AbstractViewFactory;
 use Berry\Symfony\Locator\Trait\WithGenerateUrl;
 use Symfony\Component\Routing\Router;
 
