@@ -31,7 +31,7 @@ use function Berry\Html5\link;
 use function Berry\Html5\script;
 use function Berry\Html5\title;
 
-class AppLayout extends AbstractViewFactory
+class AppLayout
 {
     public function render(string $title, Element $content): Element
     {
@@ -62,6 +62,7 @@ namespace App\View;
 
 use Berry\Element;
 use Berry\Symfony\View\AbstractViewFactory;
+use Berry\Symfony\Locator\Trait\WithGenerateUrl;
 use Symfony\Component\Routing\Router;
 
 use function Berry\Html5\button;
@@ -69,8 +70,10 @@ use function Berry\Html5\div;
 use function Berry\Html5\h1;
 use function Berry\Html5\p;
 
-class IndexPage extends AbstractViewFactory
+class IndexPage
 {
+    use WithGenerateUrl;
+
     public function render(): Element
     {
         return div()
