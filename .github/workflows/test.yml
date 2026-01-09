@@ -30,3 +30,6 @@ jobs:
 
       - name: Run PHPStan
         run: ./vendor/bin/phpstan analyse
+
+      - name: Run Pest Tests
+        run: ./vendor/bin/pest --ci

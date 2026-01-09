@@ -8,6 +8,11 @@
             "Berry\\Symfony\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Berry\\Symfony\\Test\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Christopher Kaster",
@@ -17,7 +22,7 @@
     "require": {
         "php": ">=8.3",
         "symfony/framework-bundle": "^7|^8",
-        "berry/html": ">=0.7"
+        "berry/html": ">=0.10"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
@@ -25,7 +30,8 @@
         "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "symfony/ux-icons": "^2",
-        "symfony/security-bundle": "^7|^8"
+        "symfony/security-bundle": "^7|^8",
+        "pestphp/pest": "^4"
     },
     "suggest": {
         "symfony/ux-icons": "Required to render icons via the IconFactory",
@@ -33,7 +39,8 @@
     },
     "config": {
         "allow-plugins": {
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "pestphp/pest-plugin": true
         }
     }
 }
