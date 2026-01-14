@@ -3,33 +3,27 @@
 namespace Berry\Symfony\Locator;
 
 use Berry\Symfony\UX\IconFactoryInterface;
-use Psr\Container\ContainerInterface;
+use Pest\Plugins\Environment;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment as TwigEnvironment;
 use LogicException;
 
-class ComponentServiceLocator implements ServiceSubscriberInterface
+class ComponentServiceLocator extends AbstractServiceLocator
 {
-    protected static ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        static::$container = $container;
-    }
-
-    public static function getSubscribedServices(): array
+    public static function services(): array
     {
         return [
-            AuthorizationCheckerInterface::class => '?' . AuthorizationCheckerInterface::class,
-            CsrfTokenManagerInterface::class => '?' . CsrfTokenManagerInterface::class,
-            IconFactoryInterface::class => '?' . IconFactoryInterface::class,
-            RouterInterface::class => '?' . RouterInterface::class,
-            TokenStorageInterface::class => '?' . TokenStorageInterface::class,
-            TranslatorInterface::class => '?' . TranslatorInterface::class,
+            AuthorizationCheckerInterface::class,
+            CsrfTokenManagerInterface::class,
+            IconFactoryInterface::class,
+            RouterInterface::class,
+            TokenStorageInterface::class,
+            TranslatorInterface::class,
+            TwigEnvironment::class,
         ];
     }
 
@@ -69,16 +63,9 @@ class ComponentServiceLocator implements ServiceSubscriberInterface
         return self::getService(TranslatorInterface::class, 'symfony/translation');
     }
 
-    protected static function getService(string $id, string $packageName): mixed
+    public static function getTwigEnvironment(): TwigEnvironment
     {
-        if (!static::$container->has($id)) {
-            throw new LogicException(sprintf(
-                'The service "%s" is not available. Try running "composer require %s".',
-                $id,
-                $packageName
-            ));
-        }
-
-        return static::$container->get($id);
+        /** @var TwigEnvironment */
+        return self::getService(TwigEnvironment::class, 'twig/twig');
     }
 }
