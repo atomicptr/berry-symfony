@@ -2,8 +2,8 @@
 
 namespace Berry\Symfony\Controller;
 
-use Berry\Rendering\ArrayBufferRenderer;
 use Berry\Rendering\DirectOutputRenderer;
+use Berry\Rendering\StringConcatRenderer;
 use Berry\Rendering\StringRenderer;
 use Berry\Element;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ trait BerryControllerTrait
      */
     protected function renderBerryView(Element $element, int $statusCode = 200, array $headers = [], ?StringRenderer $renderer = null): Response
     {
-        $renderer ??= new ArrayBufferRenderer();
+        $renderer ??= new StringConcatRenderer();
         $element->render($renderer);
 
         return new Response($renderer->renderToString(), $statusCode, $headers);

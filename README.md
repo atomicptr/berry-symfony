@@ -19,16 +19,16 @@ Next we'll create two views one for the layout and one for the index page:
 
 namespace App\View;
 
-use Berry\Html5\Enums\Rel;
+use Berry\Html\Enums\Rel;
 use Berry\Element;
 
-use function Berry\Html5\body;
-use function Berry\Html5\div;
-use function Berry\Html5\head;
-use function Berry\Html5\html;
-use function Berry\Html5\link;
-use function Berry\Html5\script;
-use function Berry\Html5\title;
+use function Berry\Html\body;
+use function Berry\Html\div;
+use function Berry\Html\head;
+use function Berry\Html\html;
+use function Berry\Html\link;
+use function Berry\Html\script;
+use function Berry\Html\title;
 
 class AppLayout
 {
@@ -63,10 +63,10 @@ use Berry\Element;
 use Berry\Symfony\Locator\Trait\WithGenerateUrlLocator;
 use Symfony\Component\Routing\Router;
 
-use function Berry\Html5\button;
-use function Berry\Html5\div;
-use function Berry\Html5\h1;
-use function Berry\Html5\p;
+use function Berry\Html\button;
+use function Berry\Html\div;
+use function Berry\Html\h1;
+use function Berry\Html\p;
 
 class IndexPage
 {

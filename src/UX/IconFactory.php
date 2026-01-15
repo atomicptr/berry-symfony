@@ -3,9 +3,10 @@
 namespace Berry\Symfony\UX;
 
 use Berry\Element;
-use Berry\UnsafeRawText;
 use Symfony\UX\Icons\Exception\IconNotFoundException;
 use Symfony\UX\Icons\IconRendererInterface;
+
+use function Berry\unsafeRawText;
 
 final class IconFactory implements IconFactoryInterface
 {
@@ -20,7 +21,7 @@ final class IconFactory implements IconFactoryInterface
      */
     public function render(string $name, array $attributes = []): Element
     {
-        return new UnsafeRawText(
+        return unsafeRawText(
             $this->iconRenderer->renderIcon($name, $attributes)
         );
     }

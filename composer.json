@@ -22,7 +22,7 @@
     "require": {
         "php": ">=8.3",
         "symfony/framework-bundle": "^7|^8",
-        "berry/html": ">=0.10"
+        "berry/html": ">=0.11"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
@@ -32,6 +32,15 @@
         "symfony/ux-icons": "^2",
         "symfony/security-bundle": "^7|^8",
         "pestphp/pest": "^4"
+    },
+    "scripts": {
+        "test": "php vendor/bin/pest",
+        "coverage": "XDEBUG_MODE=coverage php vendor/bin/pest --coverage"
+    },
+    "scripts-aliases": {
+        "test": [
+            "pest"
+        ]
     },
     "suggest": {
         "symfony/ux-icons": "Required to render icons via the IconFactory",

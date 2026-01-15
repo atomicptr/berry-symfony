@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
 
 use Berry\Symfony\Controller\BerryControllerTrait;
-use Berry\Element;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-use function Berry\Html5\button;
+use function Berry\Html\button;
 
 $testController = new class {
     use BerryControllerTrait;
